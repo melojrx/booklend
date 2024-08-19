@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}Controle de Empréstimos{% endblock %}
+
+{% block content %}
+<section class="search-emp">
+    <input type="text" id="search" onkeyup="searchFilm()" placeholder="Pesquisar...">
+    <a class="create" href="#">Livros Emprestados: {{ livros_emprestados_count }} </a>
+</section>
+<div class="container" style="display: flex; justify-content:space-between">
+    <div > Empréstimos Ativos: {{ livros_emprestados_count }}  </div>
+    <div > Total de Empréstimos: {{ total_emprestimos_count }} </div>
+    <div > Empréstimos Finalizados: {{ emprestimos_finalizados_count }} </div>
+</div> <br>
+<table id="myTable">
+    <thead>
+        <tr>
+            <th>Aluno</th>
+            <th>Email de Contato</th>
+            <th>Série/Turma</th>
+            <th>Turno</th>
+            <th>Título do Livro</th>
+            <th>Empréstimo</th>
+            <th>Devolução</th>
+            <th>Status</th>
+            <th>Dias</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for emprestimo in emprestimos %}
+            <tr class="{% if emprestimo.esta_atrasado %}atrasado{% endif %}">
+                <td>{{ emprestimo.usuario.get_full_name }}</td>
+                <td>{{ emprestimo.usuario.email }}</td>
+                <td>{{ emprestimo.usuario.serie_turma }}</td>
+                <td>{{ emprestimo.usuario.turno }}</td>
+                <td>{{ emprestimo.livro.nome }}</td>
+                <td>{{ emprestimo.data_emprestimo|date:"d/m/Y" }}</td>
+                <td>{% if emprestimo.data_devolucao %}{{ emprestimo.data_devolucao|date:"d/m/Y" }}{% else %}—{% endif %}</td>
+                <td>
+                    <span class="{% if emprestimo.status == 'emprestado' %}status-indisp{% elif emprestimo.status == 'devolvido' %}status-devolvido{% else %}status-disp{% endif %}">
+                        {{ emprestimo.get_status_display }}
+                    </span>
+                </td>
+                <td>
+                    {% if emprestimo.status == 'emprestado' %}
+                        {{ emprestimo.dias_restantes }} dias restantes
+                    {% elif emprestimo.status == 'devolvido' %}
+                        {% if emprestimo.esta_atrasado %}
+                            <span style="color: red;">{{ emprestimo.dias_atraso }} dias de atraso</span>
+                        {% else %}
+                            Entregue no prazo
+                        {% endif %}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if emprestimo.status == 'emprestado' %}
+                        <a href="{% url 'emprestimo-update' emprestimo.pk %}">Editar</a>
+                    {% else %}
+                        <a href="{% url 'emprestimo-detail' emprestimo.pk %}">Ver Detalhes</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function() {
+        var table = $('#myTable').DataTable({
+            paging: true,
+            pageLength: 10,
+            info: true,
+            responsive: true,
+            searching: true,  // Ativa a barra de pesquisa global
+            "language": {
+                "search": "Pesquisar:",
+                "emptyTable": "Nenhum registro encontrado",
+                "paginate": {
+                    "previous": "Anterior",
+                    "next": "Próximo"
+                },
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+                "lengthMenu": "Mostrar _MENU_ entradas"
+            }
+        });
+    
+        // Search customizada
+        $('#search').on('keyup', function() {
+            table.search(this.value).draw();
+        });
+    });
+    
+</script>
+
+{% endblock %}

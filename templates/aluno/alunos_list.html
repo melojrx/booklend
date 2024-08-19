@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Alunos{% endblock %}
+
+{% block content %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li {% if message.tags %}class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    <section class="search">
+        <input type="text" id="search" onkeyup="searchFilm()" placeholder="Pesquisar por nome...">
+        <a class="create" href="{% url 'cadastro' %}">Cadastrar</a>
+    </section>
+    <div class="container" style="display: flex; justify-content:space-between">
+        <div href="#"  > Alunos cadastrados: {{ total_alunos }}</div>
+        <div href="#"  > Alunos com Empréstimos: {{ alunos_com_livros_emprestados }}</div>
+        {% if aluno_mais_emprestimos %}
+            <div href="#"  > Top Alunto: {{ aluno_mais_emprestimos.aluno.get_full_name }} ({{ aluno_mais_emprestimos.total_emprestimos }} empréstimos)</div>
+        {% else %}
+            <div href="#"  > Sem empréstimos ativos</div> 
+        {% endif %}
+    </div> <br>
+    <table id="myTable">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Serie/Turma</th>
+            <th>Turno</th>
+            <th>Opções</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for aluno in alunos %}
+            <tr>
+                <td>{{ aluno.get_full_name }}</td>
+                <td>{{ aluno.serie_turma }}</td>
+                <td>{{ aluno.turno }}</td>
+                <td>
+                    <a href="{% url 'aluno-update' aluno.pk %}">Editar</a>
+                    <a href="{% url 'aluno-delete' aluno.pk %}">apagar</a>
+                    <a href="{% url 'aluno-detail' aluno.pk %}">Detalhes</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <script>
+        function searchFilm() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("search");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+        
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0]; // Pesquisa pela primeira coluna (Nome)if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+    </script>
+{% endblock %}

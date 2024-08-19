@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
+
+{% block title %}Detalhes do Aluno{% endblock %}
+
+{% block content %}
+    <section class="detail">
+        <h2>{{ aluno.get_full_name }}</h2>
+        <p><strong>Email:</strong> {{ aluno.email }}<strong> Série/Turma:</strong> {{ aluno.serie_turma }} <strong>Turno:</strong> {{ aluno.turno }}</strong></p>
+    </section>
+    <h3>Histórico de Empréstimos</h3>
+    <table id="myTable">
+        <thead>
+            <tr>
+                <th>Livro</th>
+                <th>Autor</th>
+                <th>Empréstimo</th>
+                <th>Devolução</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emprestimo in historico_emprestimos %}
+                <tr>
+                    <td>{{ emprestimo.livro.nome }}</td>
+                    <td>{{ emprestimo.livro.autor }}</td>
+                    <td>{{ emprestimo.data_emprestimo|date:"d/m/Y" }}</td>
+                    <td>
+                        {% if emprestimo.data_devolucao %}
+                            {{ emprestimo.data_devolucao|date:"d/m/Y" }}
+                        {% else %}
+                            Ainda não devolvido
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+

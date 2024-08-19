@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/forms.css' %}"/>
+{% endblock %}
+
+{% block title %}Editar Empréstimo{% endblock %}
+
+{% block content %}
+   
+        <h2>Editar Empréstimo</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div style="margin-bottom: 20px;">
+                <label for="{{ form.data_devolucao.id_for_label }}">Data de Devolução:</label>
+                {{ form.data_devolucao }}
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label for="{{ form.status.id_for_label }}">Status:</label>
+                {{ form.status }}
+            </div>
+            <input type="submit" value="Salvar">
+        </form>
+   
+{% endblock %}

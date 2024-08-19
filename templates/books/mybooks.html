@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}"/>
+{% endblock %}
+
+{% block title %}Meus Livros{% endblock %}
+
+{% block content %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li {% if message.tags %}class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    <section class="search">
+        <input type="text" id="search" onkeyup="searchFilm()" placeholder="Pesquisar por nome...">
+        <a class="create" href="{% url 'livros-create' %}">Cadastrar</a>
+    </section>
+    <div class="container" style="display: flex; justify-content:space-between">
+        <div href="#"  > Livros cadastrados: {{ total_livros }} </div>
+        <div href="#"  > Livros Disponíveis: {{ livros_disponiveis }} </div>
+        {% if livro_mais_emprestado %}
+            <div href="#"  > Top Livro: {{ livro_mais_emprestado.livro.nome }} ({{ livro_mais_emprestado.total_emprestimos }} empréstimos) </div>
+        {% else %}
+            <div href="#"  > Sem empréstimos ativos</div> 
+        {% endif %}
+    </div> <br>
+    <table id="myTable">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Autor</th>
+            <th>Status</th>
+            <th>Opções</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for livro in object_list %}
+            <tr>
+                <td>{{ livro.nome }}</td>
+                <td>{{ livro.autor }}</td>
+                <td>
+                    <span class="{% if livro.status == 'disp' %}status-disp{% elif livro.status == 'indisp' %}status-indisp{% endif %}">
+                        {{ livro.get_status_display }}
+                    </span>    
+                </td>
+                <td>
+                    <a href="{% url 'livros-update' livro.pk %}">Editar</a>
+                    <a href="{% url 'livros-delete' livro.pk %}">Apagar</a>
+                    {% if livro.status == 'disp' %}
+                        <a href="{% url 'emprestar_livro' livro.pk %}">Emprestar</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
