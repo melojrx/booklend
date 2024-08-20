@@ -39,7 +39,7 @@ Após isso, o sistema estará pronto para ser acessado em:
 ## Imagens do Projeto
 
 > ### Formulário de Login
-![image](static\img\login.png) 
+![image](.\static\img\login.png) 
 
 > ### Formulário de Cadastro de Usuários pelos Admins
 ![image](static\img\cadastro.png) 
