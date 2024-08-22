@@ -39,15 +39,15 @@ Após isso, o sistema estará pronto para ser acessado em:
 ## Imagens do Projeto
 
 > ### Formulário de Login
-![image](static\img\login.png) 
+![image](/static/img/login.png) 
 
 > ### Formulário de Cadastro de Usuários pelos Admins
-![image](static\img\cadastro.png) 
+![image](static/img/cadastro.png) 
 
 > ### Formulário de Cadastro de Livros
-![image](static\img\cadastro_livro.png) 
+![image](static/img/cadastro_livro.png) 
 
 
 > ### Dashboard de acompanhamento de Empréstimos
-![image](static\img\dashboard.png)
+![image](static/img/dashboard.png)
 
