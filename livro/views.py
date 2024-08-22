@@ -55,7 +55,7 @@ class MyLivrosListView(LoginRequiredMixin, ListView):
 class LivrosCreateView(LoginRequiredMixin, CreateView):
     model = Livro
     template_name = 'books/form.html'
-    fields = ['nome', 'autor']
+    fields = ['nome', 'autor', 'estante']
     success_url = reverse_lazy('my-livros-list')
 
     def form_valid(self, form):
@@ -72,7 +72,7 @@ class LivrosCreateView(LoginRequiredMixin, CreateView):
 class LivrosUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Livro
     template_name = 'books/form.html'
-    fields = ['nome', 'autor']
+    fields = ['nome', 'autor', 'estante']
     success_url = reverse_lazy('my-livros-list')
 
     def get_context_data(self, **kwargs):
