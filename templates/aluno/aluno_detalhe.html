@@ -3,17 +3,18 @@
 
 {% block style %}
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    <link rel="stylesheet" href="{% static 'css/forms.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'css/forms.css' %}"> -->
 {% endblock %}
 
 {% block title %}Detalhes do Aluno{% endblock %}
 
 {% block content %}
-    <section class="detail">
+    <section style="margin-top: 10px;">
         <h2>{{ aluno.get_full_name }}</h2>
         <p><strong>Email:</strong> {{ aluno.email }}<strong> Série/Turma:</strong> {{ aluno.serie_turma }} <strong>Turno:</strong> {{ aluno.turno }}</strong></p>
     </section>
-    <h3>Histórico de Empréstimos</h3>
+    <div>
+    <h3 style="text-align: center;">Histórico de Empréstimos</h3>
     <table id="myTable">
         <thead>
             <tr>
@@ -40,5 +41,6 @@
             {% endfor %}
         </tbody>
     </table>
+    </div>
 {% endblock %}
 

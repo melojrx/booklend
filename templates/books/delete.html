@@ -12,7 +12,7 @@
     <section class="detail">
         <h1>Apagar Livro</h1>
         <p>Você tem certeza que deseja deletar "{{ livro.nome }}"?</p>
-        <form action="" method="post">
+        <form class="card" action="" method="post">
             {% csrf_token %}
             <input type="submit" value="Confirmar">
         </form>

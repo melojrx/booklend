@@ -11,8 +11,8 @@
 {% endblock title %}
 
 {% block content %}
-    <form method="post">
-        <h1>{{ titulo }} Aluno</h1>
+    <form class="card" method="post">
+        <h1>{{ titulo }} </h1>
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="{{ botao }}">

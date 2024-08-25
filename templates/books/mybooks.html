@@ -32,6 +32,7 @@
             <th>Nome</th>
             <th>Autor</th>
             <th>Status</th>
+            <th>Estante</th>
             <th>Opções</th>
         </tr>
         </thead>
@@ -45,6 +46,7 @@
                         {{ livro.get_status_display }}
                     </span>    
                 </td>
+                <td>{{ livro.estante }}</td>
                 <td>
                     <a href="{% url 'livros-update' livro.pk %}">Editar</a>
                     <a href="{% url 'livros-delete' livro.pk %}">Apagar</a>

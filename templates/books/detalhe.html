@@ -12,10 +12,11 @@
 {% block content %}
     <section class="detail">
         <h2>Empréstimo</h2>
-        <h1>Livro: {{ livro.nome|capfirst }} - Autor: {{ livro.autor|capfirst }}</h1>
+        <h1>Livro: <span >{{ livro.nome|capfirst }}</span> - Autor: {{ livro.autor|capfirst }}</h1>
         <h2>Status: {{ livro.get_status_display }}</h2>
         {% if livro.status == 'disp' %}
-        <form method="post"action="{% url 'emprestar_livro' livro.pk %}">
+    </section>
+        <form class="card" method="post"action="{% url 'emprestar_livro' livro.pk %}">
             {% csrf_token %}
             <h3><label for="aluno_id">Selecione o Aluno:</label>
                 <select name="aluno_id" id="aluno_id" required>
@@ -24,9 +25,10 @@
                 {% endfor %}
             </select>
             </h3>
-            <input type="submit" value="Confirmar"></form>
+            <input type="submit" value="Confirmar">
+        </form>
     {% else %}
         <p>Este livro já está emprestado.</p>
     {% endif %}
-    </section>
+   
 {% endblock %}
