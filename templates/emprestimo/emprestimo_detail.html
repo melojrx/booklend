@@ -10,7 +10,7 @@
 
 {% block content %}
     <section class="detail">
-        <h2>Empréstimo Detalhes</h2>
+        <h2>Empréstimo</h2>
         <p><strong>Livro:</strong> {{ emprestimo.livro.nome }}</p>
         <p><strong>Aluno:</strong> {{ emprestimo.usuario.get_full_name }}</p>
         <p><strong>Data de Empréstimo:</strong> {{ emprestimo.data_emprestimo|date:"d/m/Y" }}</p>

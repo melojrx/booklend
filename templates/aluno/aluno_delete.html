@@ -12,7 +12,7 @@
     <section class="detail">
         <h1>Apagar Aluno</h1>
         <p>Você tem certeza que deseja deletar "{{ aluno.get_full_name }}"?</p>
-        <form action="" method="post">
+        <form class="card" action="" method="post">
             {% csrf_token %}
             <input type="submit" value="Confirmar">
         </form>
